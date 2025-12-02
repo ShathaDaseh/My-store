@@ -1,0 +1,14 @@
+<div *ngIf="product" class="detail-box">
+
+    <img [src]="product.url" width="250">
+
+    <h2>{{ product.name }}</h2>
+    <p>{{ product.description }}</p>
+    <p class="price">{{ product.price | currency }}</p>
+
+    <label>Quantity:</label>
+    <input type="number" [(ngModel)]="quantity" min="1">
+
+<button (click)="addToCart()">Add to Cart</button>
+
+</div>

@@ -1,0 +1,22 @@
+<h2>Your Cart</h2>
+
+<div *ngIf="items.length === 0">
+    <p>Your cart is empty.</p>
+</div>
+
+<div *ngFor="let item of items" class="cart-item">
+    <img [src]="item.product.url" width="100">
+    <h3>{{ item.product.name }}</h3>
+    <p>Quantity: {{ item.quantity }}</p>
+    <p>Price: {{ item.product.price | currency }}</p>
+</div>
+
+<h3>Total: {{ total | currency }}</h3>
+
+<button (click)="clearCart()">Clear Cart</button>
+
+<br><br>
+
+<a routerLink="/checkout">
+    <button>Proceed to Checkout</button>
+</a>

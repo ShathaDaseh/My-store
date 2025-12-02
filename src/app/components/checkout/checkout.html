@@ -1,0 +1,14 @@
+<h2>Checkout</h2>
+
+<label>Name</label>
+<input [(ngModel)]="name" required>
+
+<label>Address</label>
+<input [(ngModel)]="address" required>
+
+<label>Card Number</label>
+<input [(ngModel)]="card" required>
+
+<h3>Total: {{ total | currency }}</h3>
+
+<button (click)="submitOrder()">Submit Order</button>
