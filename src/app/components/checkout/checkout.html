@@ -1,14 +1,68 @@
-<h2>Checkout</h2>
+<section class="section checkout">
+  <div class="section-header">
+    <div>
+      <p class="eyebrow">Checkout</p>
+      <h1>Complete your order</h1>
+    </div>
+  </div>
 
-<label>Name</label>
-<input [(ngModel)]="name" required>
+  <form class="form" #checkoutForm="ngForm" (ngSubmit)="submitOrder(checkoutForm)">
+    <label class="field-label" for="name">Name</label>
+    <input
+      id="name"
+      class="input"
+      [(ngModel)]="name"
+      name="name"
+      required
+      minlength="3"
+      placeholder="Jane Doe"
+    >
+    <p class="error" *ngIf="checkoutForm.submitted && checkoutForm.controls['name']?.invalid">
+      Name is required (min 3 characters).
+    </p>
 
-<label>Address</label>
-<input [(ngModel)]="address" required>
+    <label class="field-label" for="address">Address</label>
+    <input
+      id="address"
+      class="input"
+      [(ngModel)]="address"
+      name="address"
+      required
+      minlength="6"
+      placeholder="123 Main St"
+    >
+    <p class="error" *ngIf="checkoutForm.submitted && checkoutForm.controls['address']?.invalid">
+      Address is required.
+    </p>
 
-<label>Card Number</label>
-<input [(ngModel)]="card" required>
+    <label class="field-label" for="card">Card Number</label>
+    <input
+      id="card"
+      class="input"
+      [(ngModel)]="card"
+      name="card"
+      required
+      pattern="\\d{16}"
+      placeholder="16 digits"
+    >
+    <p class="error" *ngIf="checkoutForm.submitted && checkoutForm.controls['card']?.invalid">
+      Enter a 16-digit card number.
+    </p>
 
-<h3>Total: {{ total | currency }}</h3>
+    <div class="summary-line">
+      <span>Total</span>
+      <strong>{{ total | currency }}</strong>
+    </div>
 
-<button (click)="submitOrder()">Submit Order</button>
+    <div class="form-footer">
+      <p class="error" *ngIf="submissionError">{{ submissionError }}</p>
+      <button
+        type="submit"
+        class="btn primary full"
+        [disabled]="checkoutForm.invalid || items.length === 0"
+      >
+        Submit Order
+      </button>
+    </div>
+  </form>
+</section>

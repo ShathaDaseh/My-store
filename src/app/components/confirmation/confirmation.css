@@ -1,0 +1,42 @@
+.section.confirmation {
+    max-width: 760px;
+    margin: 40px auto;
+    padding: 24px;
+}
+
+.summary-card {
+    margin-top: 16px;
+    padding: 18px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    display: grid;
+    gap: 12px;
+}
+
+.item-row,
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-row {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 12px;
+    font-size: 1.1rem;
+}
+
+.btn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.btn.primary {
+    background: #0b7dda;
+    color: white;
+}

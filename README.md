@@ -57,3 +57,22 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Project Overview
+
+MyStore is a single-page Angular e-commerce experience. Users can browse products, view details, add items to a shared cart, adjust quantities, and complete checkout with a client-validated form. An order confirmation page summarizes the purchase.
+
+## Running the app
+
+1. Install dependencies: `npm install`
+2. Start the dev server: `npm start` (or `ng serve`) and open `http://localhost:4200/`
+
+Product data is served locally from `public/data.json`, so no external API is required.
+
+## Key features
+
+- Product list with reusable product item card and quantity selector
+- Product detail page with add-to-cart flow
+- Cart page with quantity edits, per-line totals, removal, and running total
+- Checkout form with template-driven validation and order submission
+- Order confirmation page that summarizes the last order

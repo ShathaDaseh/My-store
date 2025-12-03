@@ -1,22 +1,46 @@
-<h2>Your Cart</h2>
+<section class="section">
+  <div class="section-header">
+    <div>
+      <p class="eyebrow">Cart</p>
+      <h1>Your Items</h1>
+    </div>
+    <button class="btn ghost" (click)="clearCart()" [disabled]="items.length === 0">Clear Cart</button>
+  </div>
 
-<div *ngIf="items.length === 0">
+  <div *ngIf="items.length === 0" class="empty-state">
     <p>Your cart is empty.</p>
-</div>
+    <a routerLink="/" class="btn primary">Continue shopping</a>
+  </div>
 
-<div *ngFor="let item of items" class="cart-item">
-    <img [src]="item.product.url" width="100">
-    <h3>{{ item.product.name }}</h3>
-    <p>Quantity: {{ item.quantity }}</p>
-    <p>Price: {{ item.product.price | currency }}</p>
-</div>
+  <div *ngIf="items.length > 0" class="cart-list">
+    <article *ngFor="let item of items" class="cart-item">
+      <div class="thumb">
+        <img [src]="item.product.url" alt="{{ item.product.name }}">
+      </div>
+      <div class="cart-body">
+        <h3>{{ item.product.name }}</h3>
+        <p class="muted">{{ item.product.description }}</p>
+        <div class="cart-actions">
+          <label class="field-label">Qty</label>
+          <input
+            type="number"
+            class="input small"
+            [(ngModel)]="item.quantity"
+            (ngModelChange)="updateQuantity(item.product.id, $event)"
+            min="1"
+          >
+          <span class="line-total">{{ item.product.price * item.quantity | currency }}</span>
+          <button class="btn ghost" type="button" (click)="removeItem(item.product.id)">Remove</button>
+        </div>
+      </div>
+    </article>
 
-<h3>Total: {{ total | currency }}</h3>
-
-<button (click)="clearCart()">Clear Cart</button>
-
-<br><br>
-
-<a routerLink="/checkout">
-    <button>Proceed to Checkout</button>
-</a>
+    <div class="cart-summary">
+      <div class="summary-line">
+        <span>Total</span>
+        <strong>{{ total | currency }}</strong>
+      </div>
+      <a routerLink="/checkout" class="btn primary full">Proceed to Checkout</a>
+    </div>
+  </div>
+</section>

@@ -1,45 +1,63 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { CartService } from '../../services/cart.service';
-import { HttpClient } from '@angular/common/http';
-import { Product } from '../../models/product';
+import { CurrencyPipe, NgIf } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { CartItem, CartService } from '../../services/cart.service';
+import { Order } from '../../models/order';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [FormsModule, CurrencyPipe],
-  templateUrl: './checkout.html'
+  imports: [FormsModule, CurrencyPipe, NgIf],
+  templateUrl: './checkout.html',
+  styleUrls: ['./checkout.css']
 })
 export class CheckoutComponent implements OnInit {
+  name = '';
+  address = '';
+  card = '';
 
-  name: string = '';
-  address: string = '';
-  card: string = '';
-
-  items: { product: Product; quantity: number }[] = [];
+  items: CartItem[] = [];
   total = 0;
+  submissionError = '';
 
   constructor(
     private cartService: CartService,
-    private http: HttpClient
+    private orderService: OrderService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.items = this.cartService.getItems();
-    this.total = this.cartService.getTotal();
+    this.cartService.items$.subscribe((items) => {
+      this.items = items;
+      this.total = this.cartService.getTotal();
+    });
   }
 
-  submitOrder() {
-    const order = {
-      customerName: this.name,
-      customerAddress: this.address,
+  submitOrder(form: NgForm) {
+    if (form.invalid || this.items.length === 0) {
+      form.control.markAllAsTouched();
+      return;
+    }
+
+    const order: Order = {
+      name: this.name.trim(),
+      address: this.address.trim(),
+      card: this.card.trim(),
       total: this.total,
       items: this.items
     };
 
-    this.http.post('http://localhost:3000/orders', order).subscribe(() => {
-      alert("Order complete!");
+    this.orderService.createOrder(order).subscribe({
+      next: () => {
+        this.cartService.clearCart();
+        this.router.navigate(['/confirmation']);
+      },
+      error: (err) => {
+        console.error(err);
+        this.submissionError = 'Error submitting order. Please try again.';
+      }
     });
   }
 }

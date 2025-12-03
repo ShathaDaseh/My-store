@@ -1,9 +1,17 @@
-<div *ngFor="let p of products" class="product-card">
+<section class="section">
+  <div class="section-header">
+    <div>
+      <p class="eyebrow">Fresh Picks</p>
+      <h1>Shop Products</h1>
+    </div>
+    <a class="link-quiet" routerLink="/cart">View cart</a>
+  </div>
 
-    <a [routerLink]="['/products', p.id]">
-        <img [src]="p.url" width="150">
-        <h3>{{ p.name }}</h3>
-        <p>{{ p.price | currency }}</p>
-    </a>
-
-</div>
+  <div class="product-grid">
+    <app-product-item
+      *ngFor="let p of products"
+      [product]="p"
+      (addToCart)="handleAddToCart($event)"
+    ></app-product-item>
+  </div>
+</section>

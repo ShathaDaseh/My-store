@@ -2,7 +2,10 @@
   <div class="logo">MyStore</div>
   <nav class="nav">
     <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Products</a>
-    <a routerLink="/cart" routerLinkActive="active">Cart</a>
+    <a routerLink="/cart" routerLinkActive="active">
+      Cart
+      <span class="badge" *ngIf="(cartCount$ | async) as count">{{ count }}</span>
+    </a>
     <a routerLink="/checkout" routerLinkActive="active">Checkout</a>
   </nav>
 </header>

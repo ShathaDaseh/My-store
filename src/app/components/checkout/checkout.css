@@ -1,0 +1,124 @@
+/* ===== Checkout Section ===== */
+
+.section.checkout {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 24px;
+}
+
+.section-header {
+    margin-bottom: 30px;
+}
+
+.eyebrow {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: #727272;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+/* ===== Form ===== */
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 22px;
+    background: #ffffff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+}
+
+.field-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #333;
+}
+
+.input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #cccccc;
+    font-size: 1rem;
+    transition: border 0.2s ease-in-out;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #0b7dda;
+    box-shadow: 0 0 0 2px rgba(11, 125, 218, 0.2);
+}
+
+/* ===== Summary Line ===== */
+
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    margin-top: 12px;
+    font-weight: 500;
+}
+
+.summary-line strong {
+    font-size: 1.3rem;
+    color: #0b7dda;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.error {
+    color: #d93025;
+    font-size: 0.9rem;
+    margin: -4px 0 6px;
+}
+
+/* ===== Button ===== */
+
+.btn {
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 8px;
+}
+
+.btn.primary {
+    background-color: #0b7dda;
+    color: white;
+    width: 100%;
+}
+
+.btn.primary:hover {
+    background-color: #095fa1;
+}
+
+.btn.full {
+    width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .form {
+        padding: 16px;
+    }
+
+    .section.checkout {
+        padding: 16px;
+    }
+}

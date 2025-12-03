@@ -1,0 +1,46 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Vintage Camera",
+      "price": 249.99,
+      "description": "Retro-inspired camera with manual controls and a modern sensor.",
+      "url": "https://picsum.photos/seed/camera/640/480"
+    },
+    {
+      "id": 2,
+      "name": "Noise-Cancelling Headphones",
+      "price": 189.5,
+      "description": "Comfortable over-ear headphones that mute distractions for deep focus.",
+      "url": "https://picsum.photos/seed/headphones/640/480"
+    },
+    {
+      "id": 3,
+      "name": "4K Monitor",
+      "price": 429.0,
+      "description": "Ultra-sharp 27\" 4K display with thin bezels and wide color coverage.",
+      "url": "https://picsum.photos/seed/monitor/640/480"
+    },
+    {
+      "id": 4,
+      "name": "Mechanical Keyboard",
+      "price": 129.99,
+      "description": "Tactile switches, RGB backlighting, and a compact tenkeyless layout.",
+      "url": "https://picsum.photos/seed/keyboard/640/480"
+    },
+    {
+      "id": 5,
+      "name": "Smartwatch",
+      "price": 199.0,
+      "description": "Track fitness, receive notifications, and stay connected on the go.",
+      "url": "https://picsum.photos/seed/watch/640/480"
+    },
+    {
+      "id": 6,
+      "name": "Portable Speaker",
+      "price": 79.99,
+      "description": "Compact Bluetooth speaker with deep bass and 12-hour battery life.",
+      "url": "https://picsum.photos/seed/speaker/640/480"
+    }
+  ]
+}

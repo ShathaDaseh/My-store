@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrencyPipe, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product';
 import { CartService } from '../../services/cart.service';
@@ -10,27 +10,34 @@ import { CartService } from '../../services/cart.service';
   selector: 'app-product-detail',
   standalone: true,
   imports: [NgIf, FormsModule, CurrencyPipe],
-  templateUrl: './product-detail.html'
+  templateUrl: './product-detail.html',
+  styleUrls: ['./product-detail.css']
 })
 export class ProductDetailComponent implements OnInit {
-  product!: Product;
+  product?: Product;
   quantity = 1;
+
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private productService: ProductService,
     private cartService: CartService
   ) { }
 
-  addToCart() {
-    this.cartService.addToCart(this.product, this.quantity);
-    alert("Product added to cart!");
+  addToCart(): void {
+    if (!this.product) {
+      return;
+    }
+    this.cartService.addToCart(this.product, Math.max(1, this.quantity));
+    this.quantity = 1;
+    alert('Product added to cart');
   }
-
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.productService.getProduct(id).subscribe(p => {
-      this.product = p;
+    this.productService.getProduct(id).subscribe({
+      next: (p) => (this.product = p),
+      error: () => this.router.navigateByUrl('/')
     });
   }
 }
