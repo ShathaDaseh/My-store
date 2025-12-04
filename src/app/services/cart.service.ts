@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, catchError, of } from 'rxjs';
 import { Product } from '../models/product';
+import { environment } from '../../environments/environment';
 
 export interface CartItem {
   product: Product;
@@ -13,6 +15,13 @@ export interface CartItem {
 export class CartService {
   private readonly itemsSubject = new BehaviorSubject<CartItem[]>([]);
   readonly items$ = this.itemsSubject.asObservable();
+  private readonly storageKey = 'mystore_cart';
+  private readonly cartEndpoint = `${environment.apiUrl}/cart`;
+
+  constructor(private http: HttpClient) {
+    this.restoreFromStorage();
+    this.loadFromBackend();
+  }
 
   addToCart(product: Product, quantity: number): void {
     const normalized = Math.max(1, Number(quantity) || 1);
@@ -26,6 +35,7 @@ export class CartService {
     }
 
     this.itemsSubject.next(items);
+    this.persist();
   }
 
   updateQuantity(productId: number, quantity: number): void {
@@ -34,11 +44,13 @@ export class CartService {
       item.product.id === productId ? { ...item, quantity: normalized } : item
     );
     this.itemsSubject.next(next);
+    this.persist();
   }
 
   removeItem(productId: number): void {
     const next = this.itemsSubject.value.filter((item) => item.product.id !== productId);
     this.itemsSubject.next(next);
+    this.persist();
   }
 
   getItems(): CartItem[] {
@@ -47,6 +59,7 @@ export class CartService {
 
   clearCart(): void {
     this.itemsSubject.next([]);
+    this.persist();
   }
 
   getTotal(): number {
@@ -57,5 +70,48 @@ export class CartService {
 
   getItemCount(): number {
     return this.itemsSubject.value.reduce((sum, item) => sum + item.quantity, 0);
+  }
+
+  private persist(): void {
+    this.persistToStorage();
+    this.syncToBackend();
+  }
+
+  private persistToStorage(): void {
+    try {
+      localStorage.setItem(this.storageKey, JSON.stringify(this.itemsSubject.value));
+    } catch {
+      // ignore storage errors
+    }
+  }
+
+  private restoreFromStorage(): void {
+    try {
+      const stored = localStorage.getItem(this.storageKey);
+      if (stored) {
+        this.itemsSubject.next(JSON.parse(stored));
+      }
+    } catch {
+      // ignore parse errors
+    }
+  }
+
+  private loadFromBackend(): void {
+    this.http.get<{ items?: CartItem[] } | CartItem[]>(this.cartEndpoint).pipe(
+      catchError(() => of(null))
+    ).subscribe((res) => {
+      const incoming = Array.isArray(res) ? res : res?.items;
+      if (incoming && incoming.length) {
+        this.itemsSubject.next(incoming);
+        this.persistToStorage();
+      }
+    });
+  }
+
+  private syncToBackend(): void {
+    const payload = { items: this.itemsSubject.value };
+    this.http.put(this.cartEndpoint, payload).pipe(
+      catchError(() => of(null))
+    ).subscribe();
   }
 }

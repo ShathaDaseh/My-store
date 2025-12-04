@@ -9,6 +9,15 @@
         <span class="badge" *ngIf="(cartCount$ | async) as count">{{ count }}</span>
       </a>
     </nav>
+    <div class="auth-row">
+      <ng-container *ngIf="isAuthenticated$ | async; else loggedOut">
+        <span class="user-pill" *ngIf="(user$ | async) as user">Hi, {{ user.name || user.email }}</span>
+        <button class="auth-btn" type="button" (click)="logout()">Log out</button>
+      </ng-container>
+      <ng-template #loggedOut>
+        <button class="auth-btn" type="button" (click)="login()">Log in / Sign up</button>
+      </ng-template>
+    </div>
   </div>
 </header>
 

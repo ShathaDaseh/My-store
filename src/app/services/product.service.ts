@@ -1,23 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable, shareReplay } from 'rxjs';
+import { catchError, map, Observable, of, shareReplay } from 'rxjs';
 import { Product } from '../models/product';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  private readonly dataUrl = '/data.json';
+  private readonly dataUrl = `${environment.apiUrl}/products`;
   private products$?: Observable<Product[]>;
 
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<Product[]> {
     if (!this.products$) {
-      this.products$ = this.http.get<{ products: Product[] }>(this.dataUrl).pipe(
-        map((res) => res.products ?? []),
-        shareReplay(1)
+      this.products$ = this.http.get<Product[]>(this.dataUrl).pipe(
+        map((res) => res ?? []),
+        catchError(() =>
+          this.http.get<{ products: Product[] }>('/data.json').pipe(
+            map((res) => res.products ?? []),
+          )
+        ),
+        shareReplay(1),
       );
     }
     return this.products$;
