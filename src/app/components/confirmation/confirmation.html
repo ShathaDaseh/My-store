@@ -1,22 +1,9 @@
-<section class="section confirmation" *ngIf="order">
-  <div class="section-header">
-    <div>
-      <p class="eyebrow">Order Confirmed</p>
-      <h1>Thank you, {{ order.name }}!</h1>
-      <p class="muted">Your items are on the way to {{ order.address }}.</p>
-    </div>
-    <a routerLink="/" class="btn primary">Back to shopping</a>
-  </div>
-
-  <div class="summary-card">
-    <h3>Order summary</h3>
-    <div class="item-row" *ngFor="let item of order.items">
-      <span>{{ item.product.name }} (x{{ item.quantity }})</span>
-      <strong>{{ item.product.price * item.quantity | currency }}</strong>
-    </div>
-    <div class="total-row">
-      <span>Total paid</span>
-      <strong>{{ order.total | currency }}</strong>
-    </div>
+<section class="confirmation" *ngIf="order">
+  <div class="confirmation-card">
+    <p class="success">Success! 🎉</p>
+    <p class="thanks">Thank you, <strong>{{ order.name }}</strong>!</p>
+    <p class="summary">Your <strong>{{ order.total | currency }}</strong> order is confirmed!</p>
+    <p class="note">Please allow 1-3 business day(s) for shipping.</p>
+    <a routerLink="/" class="btn primary">Back to product list</a>
   </div>
 </section>

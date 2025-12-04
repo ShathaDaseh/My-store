@@ -1,42 +1,53 @@
-.section.confirmation {
-    max-width: 760px;
-    margin: 40px auto;
-    padding: 24px;
-}
-
-.summary-card {
-    margin-top: 16px;
-    padding: 18px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 12px;
-    display: grid;
-    gap: 12px;
-}
-
-.item-row,
-.total-row {
+.confirmation {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
+    padding: 48px 12px 72px;
 }
 
-.total-row {
-    border-top: 1px solid #e5e7eb;
-    padding-top: 12px;
+.confirmation-card {
+    text-align: center;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e6edf5;
+    padding: 34px 32px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.05);
+    max-width: 520px;
+}
+
+.success {
+    font-size: 2rem;
+    color: #16a34a;
+    font-weight: 800;
+    margin: 0 0 12px;
+}
+
+.thanks {
     font-size: 1.1rem;
+    margin: 0 0 6px;
+}
+
+.summary {
+    font-size: 1.05rem;
+    margin: 0 0 8px;
+}
+
+.note {
+    color: #4a4f55;
+    margin: 6px 0 18px;
 }
 
 .btn {
-    padding: 10px 16px;
+    padding: 12px 18px;
     border-radius: 8px;
     border: none;
     cursor: pointer;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
+    display: inline-block;
 }
 
 .btn.primary {
-    background: #0b7dda;
+    background: #0c7dd1;
     color: white;
 }

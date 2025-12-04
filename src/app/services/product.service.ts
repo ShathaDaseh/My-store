@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { map, Observable, shareReplay } from 'rxjs';
 import { Product } from '../models/product';
 
 @Injectable({
@@ -9,13 +9,18 @@ import { Product } from '../models/product';
 export class ProductService {
 
   private readonly dataUrl = '/data.json';
+  private products$?: Observable<Product[]>;
 
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<{ products: Product[] }>(this.dataUrl).pipe(
-      map((res) => res.products ?? [])
-    );
+    if (!this.products$) {
+      this.products$ = this.http.get<{ products: Product[] }>(this.dataUrl).pipe(
+        map((res) => res.products ?? []),
+        shareReplay(1)
+      );
+    }
+    return this.products$;
   }
 
   getProduct(id: number): Observable<Product> {

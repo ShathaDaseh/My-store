@@ -1,13 +1,15 @@
-<header class="topbar">
-  <div class="logo">MyStore</div>
-  <nav class="nav">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Products</a>
-    <a routerLink="/cart" routerLinkActive="active">
-      Cart
-      <span class="badge" *ngIf="(cartCount$ | async) as count">{{ count }}</span>
-    </a>
-    <a routerLink="/checkout" routerLinkActive="active">Checkout</a>
-  </nav>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="brand">MyStore</div>
+    <nav class="subnav">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Product List</a>
+      <span class="divider">|</span>
+      <a routerLink="/cart" routerLinkActive="active">
+        Cart 🛒
+        <span class="badge" *ngIf="(cartCount$ | async) as count">{{ count }}</span>
+      </a>
+    </nav>
+  </div>
 </header>
 
 <main class="page">

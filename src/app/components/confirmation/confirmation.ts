@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrencyPipe, NgFor, NgIf } from '@angular/common';
+import { CurrencyPipe, NgIf } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { OrderService } from '../../services/order.service';
 import { Order } from '../../models/order';
@@ -7,7 +7,7 @@ import { Order } from '../../models/order';
 @Component({
   selector: 'app-confirmation',
   standalone: true,
-  imports: [NgIf, NgFor, RouterLink, CurrencyPipe],
+  imports: [NgIf, RouterLink, CurrencyPipe],
   templateUrl: './confirmation.html',
   styleUrls: ['./confirmation.css']
 })

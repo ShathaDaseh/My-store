@@ -1,17 +1,26 @@
-<section *ngIf="product" class="section product-detail">
-  <div class="detail-media">
-    <img [src]="product.url" alt="{{ product.name }}">
-  </div>
-  <div class="detail-copy">
-    <p class="eyebrow">Product Detail</p>
-    <h1>{{ product.name }}</h1>
-    <p class="muted">{{ product.description }}</p>
-    <p class="detail-price">{{ product.price | currency }}</p>
-
-    <label class="field-label">Quantity</label>
-    <div class="qty-row">
-      <input type="number" [(ngModel)]="quantity" min="1" class="input">
-      <button class="btn primary" (click)="addToCart()">Add to Cart</button>
+<ng-container *ngIf="product; else loadingTpl">
+  <section class="section product-detail">
+    <div class="detail-media">
+      <img [src]="product.url" alt="{{ product.name }}">
     </div>
-  </div>
-</section>
+    <div class="detail-copy">
+      <h1>{{ product.name }}</h1>
+      <p class="detail-price">{{ product.price | currency }}</p>
+      <p class="muted">{{ product.description }}</p>
+
+      <label class="field-label">Quantity</label>
+      <div class="qty-row">
+        <select class="input" [(ngModel)]="quantity">
+          <option *ngFor="let q of qtyOptions" [ngValue]="q">{{ q }}</option>
+        </select>
+        <button class="btn primary" (click)="addToCart()">Add to Cart</button>
+      </div>
+
+      <a routerLink="/" class="back-link">← Back to product list</a>
+    </div>
+  </section>
+</ng-container>
+
+<ng-template #loadingTpl>
+  <div class="loading">Loading product...</div>
+</ng-template>

@@ -1,13 +1,6 @@
-<section class="section">
-  <div class="section-header">
-    <div>
-      <p class="eyebrow">Fresh Picks</p>
-      <h1>Shop Products</h1>
-    </div>
-    <a class="link-quiet" routerLink="/cart">View cart</a>
-  </div>
-
-  <div class="product-grid">
+<section class="catalog">
+  <div *ngIf="loading" class="loading">Loading products...</div>
+  <div class="catalog-grid" *ngIf="!loading">
     <app-product-item
       *ngFor="let p of products"
       [product]="p"

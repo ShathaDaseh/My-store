@@ -1,65 +1,32 @@
-/* ===== Section Layout ===== */
-
-.section {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 24px;
+/* Layout */
+.catalog {
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 12px 4px 28px;
 }
 
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 28px;
-}
-
-.eyebrow {
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    color: #727272;
-    font-weight: 600;
-    margin-bottom: 4px;
-}
-
-h1 {
-    font-size: 2rem;
-    font-weight: 700;
-}
-
-/* ===== Link Quiet ===== */
-
-.link-quiet {
-    color: #0b7dda;
-    font-weight: 600;
-    text-decoration: none;
-    transition: 0.2s ease-in-out;
-}
-
-.link-quiet:hover {
-    text-decoration: underline;
-}
-
-/* ===== Product Grid ===== */
-
-.product-grid {
+.catalog-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 24px;
+    gap: 30px;
+    justify-items: center;
 }
 
-/* ===== Product Card ===== */
-
+/* Card */
 .product-card {
+    width: 100%;
+    max-width: 320px;
     background: #ffffff;
-    border-radius: 14px;
-    border: 1px solid #e6e6e6;
-    transition: all 0.25s ease-in-out;
-    overflow: hidden;
+    border: 2px solid #a9dff6;
+    border-radius: 10px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.10);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
 }
 
 .card-link {
@@ -68,94 +35,99 @@ h1 {
     text-decoration: none;
 }
 
-/* ===== Image Area ===== */
-
 .image-wrap {
     width: 100%;
-    height: 230px;
-    background: #fafafa;
+    height: 260px;
+    background: #f9fbfd;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #dcedf7;
 }
 
 .image-wrap img {
-    width: 85%;
-    height: 85%;
+    width: 86%;
+    height: 86%;
     object-fit: contain;
 }
 
-/* ===== Card Body ===== */
-
 .card-body {
-    padding: 16px;
-}
-
-.card-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 16px 18px 14px;
 }
 
 .card-top h3 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0;
-    color: #222;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0 0 8px;
 }
 
 .price-tag {
-    font-size: 1.1rem;
+    display: block;
+    font-size: 1rem;
     font-weight: 700;
-    color: #0b7dda;
+    color: #0c7dd1;
+    margin-bottom: 4px;
 }
 
 .muted {
-    margin-top: 8px;
-    color: #757575;
-    font-size: 0.9rem;
+    color: #5d646b;
+    font-size: 0.95rem;
+    margin: 0;
 }
 
 .qty-row {
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 10px;
-    padding: 12px 16px;
-    border-top: 1px solid #eee;
+    padding: 14px 16px 18px;
+    border-top: 1px solid #dcedf7;
 }
 
 .input.small {
     width: 80px;
     padding: 8px 10px;
     border-radius: 8px;
-    border: 1px solid #cccccc;
+    border: 1px solid #b8c6d4;
     font-size: 0.95rem;
+    color: #1f1f1f;
+    background: #ffffff;
+}
+
+.input.small:focus {
+    outline: none;
+    border-color: #0c7dd1;
+    box-shadow: 0 0 0 2px rgba(12, 125, 209, 0.16);
 }
 
 .btn {
-    padding: 10px 14px;
+    padding: 10px 16px;
     border-radius: 8px;
     border: none;
-    background: #0b7dda;
+    background: #0c7dd1;
     color: #fff;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    transition: background 0.2s ease-in-out;
+    transition: background 0.2s ease-in-out, transform 0.2s ease;
 }
 
 .btn:hover {
-    background: #095fa1;
+    background: #0a6caf;
 }
 
-/* ===== Responsive ===== */
+.btn:active {
+    transform: translateY(1px);
+}
+
+.loading {
+    text-align: center;
+    padding: 40px 0;
+    color: #4a4f55;
+    font-weight: 600;
+}
 
 @media (max-width: 768px) {
-    .section {
-        padding: 16px;
-    }
-
     .image-wrap {
-        height: 190px;
+        height: 210px;
     }
 }

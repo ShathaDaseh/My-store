@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrencyPipe, NgIf } from '@angular/common';
+import { CurrencyPipe, NgIf, NgFor } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CartItem, CartService } from '../../services/cart.service';
@@ -9,7 +9,7 @@ import { OrderService } from '../../services/order.service';
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [FormsModule, CurrencyPipe, NgIf],
+  imports: [FormsModule, CurrencyPipe, NgIf, NgFor],
   templateUrl: './checkout.html',
   styleUrls: ['./checkout.css']
 })
@@ -35,8 +35,25 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
+  updateQuantity(productId: number, quantity: number): void {
+    const normalized = Math.max(1, Number(quantity) || 1);
+    this.cartService.updateQuantity(productId, normalized);
+    this.total = this.cartService.getTotal();
+  }
+
   submitOrder(form: NgForm) {
-    if (form.invalid || this.items.length === 0) {
+    this.submissionError = '';
+    const digitsOnly = (this.card || '').replace(/\D/g, '').slice(0, 16);
+    this.card = digitsOnly;
+
+    if (this.items.length === 0) {
+      this.submissionError = 'cart';
+      form.control.markAllAsTouched();
+      return;
+    }
+
+    if (!digitsOnly || digitsOnly.length !== 16) {
+      this.submissionError = 'card';
       form.control.markAllAsTouched();
       return;
     }
