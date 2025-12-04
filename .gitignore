@@ -41,3 +41,9 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Local secrets/config (keep out of git)
+.env
+.env.*
+src/environments/environment.*.local.ts
+auth0.config.json

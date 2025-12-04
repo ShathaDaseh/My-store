@@ -16,7 +16,8 @@ export class CartService {
   private readonly itemsSubject = new BehaviorSubject<CartItem[]>([]);
   readonly items$ = this.itemsSubject.asObservable();
   private readonly storageKey = 'mystore_cart';
-  private readonly cartEndpoint = `${environment.apiUrl}/cart`;
+  private readonly cartEndpoint = environment.apiUrl ? `${environment.apiUrl}/cart` : '';
+  private readonly hasBackend = !!environment.apiUrl;
 
   constructor(private http: HttpClient) {
     this.restoreFromStorage();
@@ -97,6 +98,9 @@ export class CartService {
   }
 
   private loadFromBackend(): void {
+    if (!this.hasBackend || !this.cartEndpoint) {
+      return;
+    }
     this.http.get<{ items?: CartItem[] } | CartItem[]>(this.cartEndpoint).pipe(
       catchError(() => of(null))
     ).subscribe((res) => {
@@ -109,6 +113,9 @@ export class CartService {
   }
 
   private syncToBackend(): void {
+    if (!this.hasBackend || !this.cartEndpoint) {
+      return;
+    }
     const payload = { items: this.itemsSubject.value };
     this.http.put(this.cartEndpoint, payload).pipe(
       catchError(() => of(null))

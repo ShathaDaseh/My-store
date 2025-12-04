@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, of, shareReplay } from 'rxjs';
+import { catchError, map, Observable, of, shareReplay, switchMap } from 'rxjs';
 import { Product } from '../models/product';
 import { environment } from '../../environments/environment';
 
@@ -9,21 +9,29 @@ import { environment } from '../../environments/environment';
 })
 export class ProductService {
 
-  private readonly dataUrl = `${environment.apiUrl}/products`;
+  private readonly dataUrl = environment.apiUrl ? `${environment.apiUrl}/products` : '';
   private products$?: Observable<Product[]>;
 
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<Product[]> {
     if (!this.products$) {
-      this.products$ = this.http.get<Product[]>(this.dataUrl).pipe(
-        map((res) => res ?? []),
-        catchError(() =>
-          this.http.get<{ products: Product[] }>('/data.json').pipe(
-            map((res) => res.products ?? []),
+      const api$ = this.dataUrl
+        ? this.http.get<Product[]>(this.dataUrl).pipe(
+            map((res) => res ?? []),
+            catchError(() => of<Product[]>([]))
           )
+        : of<Product[]>([]);
+
+      this.products$ = api$.pipe(
+        switchMap((res: Product[]) =>
+          res && res.length
+            ? of(res)
+            : this.http.get<{ products: Product[] }>('/data.json').pipe(
+                map((data) => data.products ?? [])
+              )
         ),
-        shareReplay(1),
+        shareReplay(1)
       );
     }
     return this.products$;
